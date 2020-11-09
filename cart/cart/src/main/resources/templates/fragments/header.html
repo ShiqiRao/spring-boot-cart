@@ -1,0 +1,53 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+
+    <div th:fragment="header">
+        <title  th:attr="data-custom=#{thymeleaf.app.title}">Shop</title>
+
+        <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+              th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+              rel="stylesheet" media="screen"/>
+
+        <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+                th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+        <link rel="stylesheet" th:href="@{/css/main.css}"
+              href="../../css/main.css"/>
+    </div>
+
+</head>
+
+<body>
+
+<div th:fragment="navbar">
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" th:href="@{/home}">Shop</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse navbar-right">
+                <!-- 仅在用户尚未通过身份验证时显示shoppingCart -->
+                <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+                    <li class="active"><a th:href="@{/shoppingCart}">购物车</a></li>
+                </ul>
+                <!-- 仅在用户尚未通过身份验证时显示注册 -->
+                <ul class="nav navbar-nav" sec:authorize="!isAuthenticated()">
+                    <li class="active"><a th:href="@{/registration}">注册</a></li>
+                </ul>
+                <!-- 仅在用户尚未通过身份验证时显示登录信息 -->
+                <ul class="nav navbar-nav" sec:authorize="!isAuthenticated()">
+                    <li class="active"><a th:href="@{/login}">登录</a></li>
+                </ul>
+                <!-- 仅在用户通过身份验证时显示注销 -->
+                <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+                    <li class="active"><a th:href="@{/logout}">登出</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+</body>
+</html>
