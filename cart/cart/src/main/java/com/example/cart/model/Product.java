@@ -8,15 +8,19 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @Accessors(chain = true)
 @Setter
 @Getter
 @Entity
-@Table(name = "product")
-public class Product {
+@Table(name = "t_product")
+public class Product implements Serializable {
+
+    private static final long serialVersionUID = -4921932609253412600L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +41,9 @@ public class Product {
     @Column(name = "price", nullable = false)
     @DecimalMin(value = "0.00", message = "*价格必须为非负数")
     private BigDecimal price;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "product")
+    private List<Sold> soldList;
 
     @Override
     public boolean equals(Object o) {

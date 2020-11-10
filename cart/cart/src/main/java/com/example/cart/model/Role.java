@@ -5,14 +5,17 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Accessors(chain = true)
 @Setter
 @Getter
 @Entity
-@Table(name = "role")
-public class Role {
+@Table(name = "t_role")
+public class Role implements Serializable {
+
+    private static final long serialVersionUID = -6969646367825535431L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

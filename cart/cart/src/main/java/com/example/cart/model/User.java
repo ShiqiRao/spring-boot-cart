@@ -10,14 +10,18 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 @Accessors(chain = true)
 @Setter
 @Getter
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "t_user")
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 5752474342578373213L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,5 +58,8 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
+    private List<Order> orderList;
 
 }
