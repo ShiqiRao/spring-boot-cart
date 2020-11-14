@@ -20,11 +20,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 
-/**
- * Shopping Cart is implemented with a Map, and as a session bean
- *
- * @author Dusan
- */
 @Service
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Transactional
@@ -37,12 +32,6 @@ public class ShoppingCartService {
     private Map<Product, Integer> products = new HashMap<>();
 
 
-    /**
-     * If product is in the map just increment quantity by 1.
-     * If product is not in the map with, add it with quantity 1
-     *
-     * @param product
-     */
     public void addProduct(Product product) {
         if (products.containsKey(product)) {
             products.replace(product, products.get(product) + 1);
@@ -51,12 +40,6 @@ public class ShoppingCartService {
         }
     }
 
-    /**
-     * If product is in the map with quantity > 1, just decrement quantity by 1.
-     * If product is in the map with quantity 1, remove it from map
-     *
-     * @param product
-     */
     public void removeProduct(Product product) {
         if (products.containsKey(product)) {
             if (products.get(product) > 1)
@@ -67,9 +50,6 @@ public class ShoppingCartService {
         }
     }
 
-    /**
-     * @return unmodifiable copy of the map
-     */
     public Map<Product, Integer> getProductsInCart() {
         return Collections.unmodifiableMap(products);
     }
@@ -82,7 +62,6 @@ public class ShoppingCartService {
         BigDecimal payment = BigDecimal.ZERO;
         List<Sold> soldList = new ArrayList<>();
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-            // Refresh quantity for every product before checking
             Product key = entry.getKey();
             Integer quantity = entry.getValue();
             Optional<Product> one = productRepository.findOne(Example.of(key));

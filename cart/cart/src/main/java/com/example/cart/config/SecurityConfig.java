@@ -1,5 +1,6 @@
 package com.example.cart.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,29 +15,15 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import javax.sql.DataSource;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AccessDeniedHandler accessDeniedHandler;
-
-    final DataSource dataSource;
-
-    @Value("${spring.admin.username}")
-    private String adminUsername;
-
-    @Value("${spring.admin.username}")
-    private String adminPassword;
-
+    private final DataSource dataSource;
     @Value("${spring.queries.users-query}")
     private String usersQuery;
-
     @Value("${spring.queries.roles-query}")
     private String rolesQuery;
-
-    @Autowired
-    public SecurityConfig(AccessDeniedHandler accessDeniedHandler, DataSource dataSource) {
-        this.accessDeniedHandler = accessDeniedHandler;
-        this.dataSource = dataSource;
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -56,25 +43,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
-                // Fix for H2 console
+                // 作用于h2-console
                 .and().headers().frameOptions().disable();
     }
 
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
-        // Database authentication
+        //用户信息使用数据库作为数据源
         auth.
                 jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(rolesQuery)
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder());
-
-        // In memory authentication
-        auth.inMemoryAuthentication()
-                .withUser(adminUsername).password(adminPassword).roles("ADMIN");
     }
 
     /**
