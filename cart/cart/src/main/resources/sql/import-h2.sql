@@ -1,13 +1,13 @@
--- password in plaintext: "password"
+-- 密码明文内容为“password”
 INSERT INTO T_USER (user_id, password, email, username, name, last_name, active)
 VALUES
   (1, '$2a$06$OAPObzhRdRXBCbk7Hj/ot.jY3zPwR8n7/mfLtKIgTzdJa4.6TwsIm', 'lester@mail.com', 'arnold', 'Cronin', 'Arnold',
    1);
--- password in plaintext: "password"
+-- 密码明文内容为“password”
 INSERT INTO T_USER (user_id, password, email, username, name, last_name, active)
 VALUES
   (2, '$2a$06$OAPObzhRdRXBCbk7Hj/ot.jY3zPwR8n7/mfLtKIgTzdJa4.6TwsIm', 'owen@gmail.com', 'rodney', 'Cecillia', 'Rodney', 1);
--- password in plaintext: "password"
+-- 密码明文内容为“password”
 INSERT INTO T_USER (user_id, password, email, username, name, last_name, active)
 VALUES (3, '$2a$06$OAPObzhRdRXBCbk7Hj/ot.jY3zPwR8n7/mfLtKIgTzdJa4.6TwsIm', 'carter@gmail.com', 'james ', 'Hosea', 'James', 1);
 
